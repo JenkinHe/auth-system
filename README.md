@@ -1,10 +1,11 @@
 # Mid-Level Auth Checklist (Backend)
 
 ## 1. Project Setup
-- [ ] Set up project structure with controllers/services/repositories
-- [ ] Environment variables system for secrets
-- [ ] Use TypeScript and ts-node / build step
-- [ ] Set up linting + formatting (ESLint + Prettier)
+- [X] Set up project structure with controllers/services/repositories
+- [X] Environment variables system for secrets
+- [X] Use TypeScript and ts-node / build step
+- [X] Set up linting + formatting (ESLint + Prettier) linting didnt work but auto format did
+- [X] Basic node_modeule , git ignore
 
 ## 2. Database & Models
 - [ ] User table
