@@ -8,6 +8,7 @@
 - [X] Basic node_modeule , git ignore
 
 ## 2. Database & Models
+- [X] Postgres in docker and pgadmin in docker
 - [ ] User table
 - [ ] Session or RefreshToken table
 - [ ] Indexes on email and refresh tokens
