@@ -4,7 +4,7 @@
 - [X] Set up project structure with controllers/services/repositories
 - [X] Environment variables system for secrets
 - [X] Use TypeScript and ts-node / build step
-- [X] Set up linting + formatting (ESLint + Prettier) linting didnt work but auto format did
+- [X] Set up linting + formatting (ESLint + Prettier)
 - [X] Basic node_modeule , git ignore
 
 ## 2. Database & Models
