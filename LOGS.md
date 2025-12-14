@@ -3,3 +3,4 @@
  - 13/12/2025 - Basic folder structure and server running , not eslint and prettier config
  - 14/12/2025 - run postgres in docker any postgres for now not latest
  - 14/12/2025 - got prettier and eslint to work properly
+ - 15/12/2025 - generate and run database migrations for user and refresh token for auth (could make more later depends)

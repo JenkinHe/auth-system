@@ -9,10 +9,10 @@
 
 ## 2. Database & Models
 - [X] Postgres in docker and pgadmin in docker
-- [ ] User table
-- [ ] Session or RefreshToken table
-- [ ] Indexes on email and refresh tokens
-- [ ] User fields: id, email, passwordHash, roles, createdAt, updatedAt
+- [X] User table
+- [X] Session or RefreshToken table
+- [X] Indexes on email and refresh tokens
+- [X] User fields: id, email, passwordHash, roles, createdAt, updatedAt
 
 ## 3. Password Security
 - [ ] Hash passwords with bcrypt/argon2
