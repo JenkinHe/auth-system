@@ -15,14 +15,14 @@
 - [X] User fields: id, email, passwordHash, roles, createdAt, updatedAt
 
 ## 3. Password Security
-- [ ] Hash passwords with bcrypt/argon2
-- [ ] Validate password strength
-- [ ] Never store plaintext passwords
+- [X] Hash passwords with bcrypt/argon2
+- [X] Validate password strength
+- [X] Never store plaintext passwords
 
 ## 4. Login & Registration
-- [ ] Register endpoint
-- [ ] Login endpoint
-- [ ] Validate input with DTOs
+- [X] Register endpoint
+- [X] Login endpoint
+- [X] Validate input with DTOs
 - [ ] Return JWT access token + refresh token
 
 ## 5. JWT Access Token

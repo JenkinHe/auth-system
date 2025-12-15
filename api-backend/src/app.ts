@@ -1,14 +1,15 @@
+import "reflect-metadata";
 import express from "express";
 import dotenv from "dotenv";
+import { useExpressServer } from "routing-controllers";
+import { AppDataSource } from "./data-source";
 
 dotenv.config();
 
 const app = express();
-app.use(express.json());
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "API is running" });
+useExpressServer(app, {
+  controllers: [__dirname + "/controllers/*.ts"],
 });
 
 export default app;
