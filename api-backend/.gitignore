@@ -1,2 +1,9 @@
-/node_modules
+# Node modules
+node_modules/
+
+# Environment variables
 .env
+
+# TypeScript build output (if you compile)
+dist/
+build/

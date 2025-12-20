@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Default command (compose can override)
-CMD ["npm", "run", "dev"]
+CMD ["nodemon","npm", "run", "dev"]

@@ -59,7 +59,7 @@
 - [ ] Use Redis expiry to auto-clean old tokens
 
 ## 11. Docker Setup
-- [ ] docker hot-reload nodemon
+- [X] docker hot-reload nodemon
 - [X] Dockerfile
 - [X] docker-compose with DB + Redis (No Redis)
 - [X] containerise the api-backend
