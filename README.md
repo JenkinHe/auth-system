@@ -23,7 +23,7 @@
 - [X] Register endpoint
 - [X] Login endpoint
 - [X] Validate input with DTOs
-- [ ] Return JWT access token + refresh token
+- [X] Return JWT access token + refresh token
 
 ## 5. JWT Access Token
 - [ ] HS256/RS256 signing
@@ -59,8 +59,10 @@
 - [ ] Use Redis expiry to auto-clean old tokens
 
 ## 11. Docker Setup
-- [ ] Dockerfile
-- [ ] docker-compose with DB + Redis
+- [ ] docker hot-reload nodemon
+- [X] Dockerfile
+- [X] docker-compose with DB + Redis (No Redis)
+- [X] containerise the api-backend
 - [ ] Environment handling for dev/prod
 
 ## 12. Tests
@@ -101,3 +103,50 @@
 - [ ] Log refresh rotations
 - [ ] Log session revocations
 - [ ] Log security-related events
+
+# Backend Quality Test Checklist
+
+## 1️⃣ Correctness & Basic Functionality
+- [ ] All endpoints respond correctly for happy paths
+- [ ] Handles multiple users simultaneously without crashing
+- [ ] Restarting the server doesn’t break functionality
+- [ ] Invalid routes return meaningful 404s or errors
+
+## 2️⃣ Error Handling
+- [ ] Invalid payloads return proper error messages (400/422)
+- [ ] Expired or invalid tokens return proper authentication errors (401/403)
+- [ ] Duplicate data entries are handled gracefully
+- [ ] Database failures / disconnections are handled without crashing
+
+## 3️⃣ Data Integrity
+- [ ] Database constraints prevent impossible states (uniques, foreign keys, etc.)
+- [ ] Race conditions don’t create inconsistent data
+- [ ] Deleting / updating records doesn’t break related entities
+
+## 4️⃣ Code Structure & Maintainability
+- [ ] Controllers are thin; business logic is in services
+- [ ] DB access is abstracted in repositories / models
+- [ ] DTOs or schema validation separates input from internal logic
+- [ ] Code is modular enough to swap frameworks / DB with minimal changes
+
+## 5️⃣ Tests
+- [ ] Unit tests cover core business logic
+- [ ] Integration tests cover critical flows (auth, create/read/update/delete)
+- [ ] Tests include failure cases (invalid input, expired tokens, DB errors)
+- [ ] Tests pass consistently without manual setup
+
+## 6️⃣ Observability
+- [ ] Logs are structured and readable
+- [ ] Errors are logged with enough context to debug
+- [ ] There’s a consistent way to track failures or unexpected events
+
+## 7️⃣ Performance & Efficiency
+- [ ] Endpoints respond reasonably under moderate load (100–1000 requests/min locally)
+- [ ] No obvious N+1 queries or unnecessary DB calls
+- [ ] Async operations are properly handled; no blocking operations
+
+## 8️⃣ Optional: Decoupling & Swap Tests
+- [ ] Framework swap (Express → Fastify) works with minimal changes
+- [ ] DB swap or schema refactor works without touching services
+- [ ] Auth / caching / other layers can be replaced independently
+

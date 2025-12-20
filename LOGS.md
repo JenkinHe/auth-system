@@ -6,3 +6,5 @@
  - 15/12/2025 - generate and run database migrations for user and refresh token for auth (could make more later depends)
  - 16/12/2025 - connect database to server, connect app to routes with UseExpressServer
  - 16/12/2025 - make login and register controllers, dtos, and authservice, encrypt with bcrypt(route with routing controllers cleaner than regular routes)
+ - 17/12/2025 - dealt with the database auth issue by, dockerising my api-backend(auth backend) so it has to do less jumps to connect with db(controlled environment)
+ - 17/12/2025 - created refresh and access token and return them on login

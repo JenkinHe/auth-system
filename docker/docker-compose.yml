@@ -13,6 +13,27 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  backend:
+    build:
+      context: ../api-backend
+      dockerfile: Dockerfile
+    container_name: auth-backend
+    command: sh -c "npm install && npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts && npm run dev"
+    volumes:
+    - ../api-backend:/app
+    - /app/node_modules
+    working_dir: /app
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: mydb
+    ports:
+    - "3000:3000"
+    depends_on:
+      - postgres
+      
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin

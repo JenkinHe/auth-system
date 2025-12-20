@@ -1,0 +1,20 @@
+# Use Node 20 LTS (lighter image)
+FROM node:20-alpine
+
+# Set working directory INSIDE container
+WORKDIR /app
+
+# Copy package files first (better caching)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the backend code
+COPY . .
+
+# Expose dev port
+EXPOSE 3000
+
+# Default command (compose can override)
+CMD ["npm", "run", "dev"]

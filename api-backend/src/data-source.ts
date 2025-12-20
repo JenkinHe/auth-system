@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "dotenv/config";
 import { DataSource } from "typeorm";
 import { User } from "./models/entities/user.entity";
 import { RefreshToken } from "./models/entities/refresh-token.entity";

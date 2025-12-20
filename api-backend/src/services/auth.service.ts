@@ -4,14 +4,18 @@ import { LoginDto } from "../dto/login";
 import { Repository } from "typeorm";
 import { User } from "../models/entities/user.entity";
 import { AppDataSource } from "../data-source";
+import { RefreshToken } from "../models/entities/refresh-token.entity";
+import { generateAccessToken, generateRefreshToken, hashRefreshToken } from "../utils/token.util";
 
 const SALT_ROUNDS = 10;
 
 export class AuthService {
   private userRepo!: Repository<User>;
+  private refreshRepo!: Repository<RefreshToken>;
 
   constructor() {
     this.userRepo = AppDataSource.getRepository(User);
+    this.refreshRepo = AppDataSource.getRepository(RefreshToken);
   }
 
   async login(dto: LoginDto) {
@@ -29,8 +33,27 @@ export class AuthService {
       throw new Error("Invalid credentials");
     }
 
-    // JWT generation comes next
-    return { message: "Login successful" };
+    const accessToken = generateAccessToken({
+      id: user.id,
+      roles: user.roles,
+    });
+
+    const refreshToken = generateRefreshToken();
+
+    const refreshTokenEntity = this.refreshRepo.create({
+      user: { id: user.id },
+      tokenHash: hashRefreshToken(refreshToken),
+      expiresAt: new Date(
+        Date.now() + Number(process.env.REFRESH_TOKEN_EXPIRES_DAYS) * 24 * 60 * 60 * 1000
+      ),
+    });
+
+    await this.refreshRepo.save(refreshTokenEntity);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 
   async register(dto: RegisterDto) {
