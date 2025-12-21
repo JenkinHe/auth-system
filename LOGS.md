@@ -9,6 +9,9 @@
  - 21/12/2025 - dealt with the database auth issue by, dockerising my api-backend(auth backend) so it has to do less jumps to connect with db(controlled environment)
  - 21/12/2025 - created refresh and access token and return them on login
  - 21/12/2025 - hot reload with nodemon for docker, hot reloads my backend in dev
+ - 21/12/2025 - breaking and regenerating migrations(by adding more description column to user)(also must exec into docker to do migration)
+ - 21/12/2025 - create a simple getter with propper rest api path strucutre to get a user by id's email and description
+ - 21/12/2025 - create middleware to verify access token
 
 Main Hurdles 
 - Eslint + Prettier Config

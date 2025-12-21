@@ -26,10 +26,10 @@
 - [X] Return JWT access token + refresh token
 
 ## 5. JWT Access Token
-- [ ] HS256/RS256 signing
-- [ ] Include userId, roles, issuedAt
-- [ ] 5–15 min expiry
-- [ ] Middleware to validate tokens
+- [X] HS256/RS256 signing
+- [X] Include userId, roles, issuedAt
+- [X] 5–15 min expiry
+- [X] Middleware to validate tokens
 
 ## 6. Refresh Tokens
 - [ ] Refresh endpoint for access token renewal
