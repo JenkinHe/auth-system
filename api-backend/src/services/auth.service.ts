@@ -1,21 +1,24 @@
 import bcrypt from "bcrypt";
-import { RegisterDto } from "../dto/register";
-import { LoginDto } from "../dto/login";
-import { Repository } from "typeorm";
+import { RegisterDto } from "../dto/authDtos/register";
+import { LoginDto } from "../dto/authDtos/login";
+import { DataSource, IsNull, Repository } from "typeorm";
 import { User } from "../models/entities/user.entity";
 import { AppDataSource } from "../data-source";
 import { RefreshToken } from "../models/entities/refresh-token.entity";
 import { generateAccessToken, generateRefreshToken, hashRefreshToken } from "../utils/token.util";
+import { RefreshTokenDto } from "../dto/authDtos/token";
 
 const SALT_ROUNDS = 10;
 
 export class AuthService {
+  private dataSource!: DataSource;
   private userRepo!: Repository<User>;
   private refreshRepo!: Repository<RefreshToken>;
 
   constructor() {
     this.userRepo = AppDataSource.getRepository(User);
     this.refreshRepo = AppDataSource.getRepository(RefreshToken);
+    this.dataSource = AppDataSource;
   }
 
   async login(dto: LoginDto) {
@@ -75,6 +78,65 @@ export class AuthService {
     await this.userRepo.save(user);
 
     return { message: "User registered successfully" };
+  }
+
+  async getNewAccessTokenWithRefreshToken(dto: RefreshTokenDto) {
+    return this.dataSource.transaction(async (manager) => {
+      const repo = manager.getRepository(RefreshToken);
+
+      //get refresh token
+      const refreshToken = await repo.findOne({
+        where: { tokenHash: hashRefreshToken(dto.refreshToken) },
+        relations: ["user"], // load relations in at runtime,
+        lock: { mode: "pessimistic_write", tables: ["refresh_tokens"] }, // prevents 2 request using same refresh token at once
+      });
+
+      //check validity
+      if (!refreshToken || refreshToken.revokedAt !== null) {
+        throw new Error("Invalid refresh token");
+      }
+
+      // update revoked status
+      const result = await repo.update(
+        { id: refreshToken.id, revokedAt: IsNull() },
+        { revokedAt: () => "CURRENT_TIMESTAMP" }
+      );
+
+      //make sure its not used
+      if (result.affected === 0) {
+        throw new Error("Refresh token already used");
+      }
+
+      const newRefreshToken = generateRefreshToken();
+
+      // enter neew refresh token in db
+      const newRefreshTokenEntity = repo.create({
+        user: { id: refreshToken.user.id },
+        tokenHash: hashRefreshToken(newRefreshToken),
+        expiresAt: new Date(
+          Date.now() + Number(process.env.REFRESH_TOKEN_EXPIRES_DAYS) * 24 * 60 * 60 * 1000
+        ),
+      });
+
+      const savedToken = await repo.save(newRefreshTokenEntity);
+
+      if (!savedToken || !savedToken.id) {
+        throw new Error("Refresh token save failed");
+      }
+
+      //make new access token
+      let accessToken;
+      try {
+        accessToken = generateAccessToken({
+          id: refreshToken.user.id,
+          roles: refreshToken.user.roles,
+        });
+      } catch (err) {
+        throw new Error("Access Token could not be generated:" + err);
+      }
+
+      return { accessToken, newRefreshToken };
+    });
   }
 
   async hashPassword(password: string): Promise<string> {

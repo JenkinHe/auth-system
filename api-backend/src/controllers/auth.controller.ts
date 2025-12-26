@@ -1,7 +1,9 @@
 import { JsonController, Post, Body, HttpCode } from "routing-controllers";
 import { AuthService } from "../services/auth.service";
-import { RegisterDto } from "../dto/register";
-import { LoginDto } from "../dto/login";
+import { RegisterDto } from "../dto/authDtos/register";
+import { LoginDto } from "../dto/authDtos/login";
+import { RefreshToken } from "../models/entities/refresh-token.entity";
+import { RefreshTokenDto } from "../dto/authDtos/token";
 
 @JsonController("/auth")
 export class AuthController {
@@ -21,5 +23,11 @@ export class AuthController {
   @HttpCode(200)
   async login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
+  }
+
+  @Post("/token")
+  @HttpCode(200)
+  async token(@Body() dto: RefreshTokenDto) {
+    return this.authService.getNewAccessTokenWithRefreshToken(dto);
   }
 }

@@ -32,10 +32,10 @@
 - [X] Middleware to validate tokens
 
 ## 6. Refresh Tokens
-- [ ] Refresh endpoint for access token renewal
-- [ ] Store refresh tokens in DB or Redis
-- [ ] Rotate refresh tokens on each request
-- [ ] Invalidate old refresh tokens on use
+- [X] Refresh endpoint for access token renewal
+- [X] Store refresh tokens in DB or Redis
+- [X] Rotate refresh tokens on each request
+- [X] Invalidate old refresh tokens on use
 
 ## 7. Basic Role-Based Access Control (RBAC)
 - [ ] Define enum roles
