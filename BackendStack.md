@@ -16,6 +16,8 @@
 ## 4️⃣ Authentication & Security
 - **jsonwebtoken** (`jsonwebtoken`) + **@types/jsonwebtoken** – JWT creation & verification
 - **bcrypt** (`bcrypt`) + **@types/bcrypt** – password hashing
+- **express-rate-limit** - rate limiting
+- **helmet** - basic security for headers
 
 ## 5️⃣ Validation
 - **class-validator** – DTO and input validation (e.g., required fields, type checks)

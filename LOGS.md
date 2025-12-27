@@ -14,6 +14,7 @@
  - 21/12/2025 - create middleware to verify access token
  - 26/12/2025 - create new, revoke refresh token and generate new access token with refresh token endpoint (make it atomic all in or all out)
  - 27/12/2025 - defining role enums, typing finesse extending classes to allow extra attached data, middleware for roles specific admin only middleware
+ - 28/12/2025 - added rate limiting user specific and ip specific and added basic helmet for basic security coverage disabled for dev
 
 Main Hurdles 
 - Eslint + Prettier Config

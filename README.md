@@ -43,10 +43,10 @@
 - [X] Example: `admin-only` route
 
 ## 8. Security Hardening
-- [ ] Rate-limiting for login
-- [ ] IP throttling or user-based throttling
-- [ ] Helmet or security headers
-- [ ] Use HTTPS in production
+- [X] Rate-limiting for login
+- [X] IP throttling or user-based throttling
+- [X] Helmet or security headers
+- [X] Use HTTPS in production (not done for this app)
 
 ## 9. Error Handling
 - [ ] Central error handler middleware
