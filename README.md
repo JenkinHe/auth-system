@@ -38,9 +38,9 @@
 - [X] Invalidate old refresh tokens on use
 
 ## 7. Basic Role-Based Access Control (RBAC)
-- [ ] Define enum roles
-- [ ] Middleware to check roles/permissions
-- [ ] Example: `admin-only` route
+- [X] Define enum roles
+- [X] Middleware to check roles/permissions
+- [X] Example: `admin-only` route
 
 ## 8. Security Hardening
 - [ ] Rate-limiting for login

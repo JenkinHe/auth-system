@@ -1,8 +1,9 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import crypto from "crypto";
 import { jwtConfig } from "../config/jwt.config";
+import { UserRole } from "../models/entities/enums/user-role.enum";
 
-export function generateAccessToken(user: { id: string; roles: string[] }) {
+export function generateAccessToken(user: { id: string; roles: UserRole[] }) {
   return jwt.sign(
     {
       sub: user.id,

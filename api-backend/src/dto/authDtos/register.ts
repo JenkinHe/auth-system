@@ -1,4 +1,5 @@
-import { IsEmail, IsString, MinLength, Matches } from "class-validator";
+import { IsEmail, IsString, MinLength, Matches, IsArray } from "class-validator";
+import { UserRole } from "../../models/entities/enums/user-role.enum";
 
 export class RegisterDto {
   @IsEmail()
@@ -10,4 +11,7 @@ export class RegisterDto {
     message: "Password must contain uppercase, lowercase and a number",
   })
   password!: string;
+
+  @IsArray()
+  role!: UserRole[];
 }

@@ -72,7 +72,8 @@ export class AuthService {
 
     const user = this.userRepo.create({
       email: dto.email,
-      passwordHash,
+      passwordHash: passwordHash,
+      roles: dto.role,
     });
 
     await this.userRepo.save(user);

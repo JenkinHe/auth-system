@@ -8,6 +8,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { RefreshToken } from "./refresh-token.entity";
+import { UserRole } from "./enums/user-role.enum";
 
 @Entity("users")
 @Index("users_email_unique_idx", ["email"], { unique: true })
@@ -26,7 +27,7 @@ export class User {
     array: true,
     default: () => "ARRAY['user']::text[]",
   })
-  roles!: string[];
+  roles!: UserRole[];
 
   @Column({ type: "text", nullable: true })
   description?: string | null;

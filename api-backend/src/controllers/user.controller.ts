@@ -5,10 +5,13 @@ import {
   Param,
   NotFoundError,
   UseBefore,
+  Req,
+  CurrentUser,
 } from "routing-controllers";
 import { UserService } from "../services/user.service";
 import { UserResponseDto } from "../dto/responseDtos/UserResponseDto";
-import { verifyAccessToken } from "../middleware/authRequest";
+import { AccessTokenPayload, AdminOnlyPath, verifyAccessToken } from "../middleware/authRequest";
+import { UserRole } from "../models/entities/enums/user-role.enum";
 
 @JsonController("/users")
 export class UserController {
@@ -28,5 +31,16 @@ export class UserController {
     }
 
     return UserResponseDto.fromEntity(user);
+  }
+
+  @Get("/:id/role")
+  @HttpCode(201)
+  @UseBefore(verifyAccessToken, AdminOnlyPath)
+  async getUserRole(@CurrentUser() user: { id: string; roles: UserRole[] }) {
+    // const user = req.user as AccessTokenPayload;
+    return {
+      userId: user?.id,
+      roles: user?.roles,
+    };
   }
 }
