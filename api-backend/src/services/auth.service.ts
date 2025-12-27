@@ -7,6 +7,8 @@ import { AppDataSource } from "../data-source";
 import { RefreshToken } from "../models/entities/refresh-token.entity";
 import { generateAccessToken, generateRefreshToken, hashRefreshToken } from "../utils/token.util";
 import { RefreshTokenDto } from "../dto/authDtos/token";
+import { AuthError } from "../errors/AuthError";
+import { ValidationError } from "../errors/ValidationError";
 
 const SALT_ROUNDS = 10;
 
@@ -27,13 +29,13 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new Error("Invalid credentials");
+      throw new AuthError("Invalid credentials");
     }
 
     const isValid = await this.verifyPassword(dto.password, user.passwordHash);
 
     if (!isValid) {
-      throw new Error("Invalid credentials");
+      throw new AuthError("Invalid credentials");
     }
 
     const accessToken = generateAccessToken({
@@ -65,7 +67,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new Error("User already exists");
+      throw new ValidationError("User already exists");
     }
 
     const passwordHash = await this.hashPassword(dto.password);
@@ -94,18 +96,22 @@ export class AuthService {
 
       //check validity
       if (!refreshToken || refreshToken.revokedAt !== null) {
-        throw new Error("Invalid refresh token");
+        throw new AuthError("Invalid refresh token");
       }
 
-      // update revoked status
-      const result = await repo.update(
-        { id: refreshToken.id, revokedAt: IsNull() },
-        { revokedAt: () => "CURRENT_TIMESTAMP" }
-      );
+      try {
+        // update revoked status
+        const result = await repo.update(
+          { id: refreshToken.id, revokedAt: IsNull() },
+          { revokedAt: () => "CURRENT_TIMESTAMP" }
+        );
 
-      //make sure its not used
-      if (result.affected === 0) {
-        throw new Error("Refresh token already used");
+        //make sure its not used
+        if (result.affected === 0) {
+          throw new AuthError("Refresh token already used");
+        }
+      } catch (err) {
+        throw new AuthError("Database error while revoking token");
       }
 
       const newRefreshToken = generateRefreshToken();
@@ -122,19 +128,14 @@ export class AuthService {
       const savedToken = await repo.save(newRefreshTokenEntity);
 
       if (!savedToken || !savedToken.id) {
-        throw new Error("Refresh token save failed");
+        throw new AuthError("Refresh token save failed");
       }
 
       //make new access token
-      let accessToken;
-      try {
-        accessToken = generateAccessToken({
-          id: refreshToken.user.id,
-          roles: refreshToken.user.roles,
-        });
-      } catch (err) {
-        throw new Error("Access Token could not be generated:" + err);
-      }
+      const accessToken = generateAccessToken({
+        id: refreshToken.user.id,
+        roles: refreshToken.user.roles,
+      });
 
       return { accessToken, newRefreshToken };
     });

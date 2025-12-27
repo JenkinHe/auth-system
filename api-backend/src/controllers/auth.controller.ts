@@ -2,7 +2,6 @@ import { JsonController, Post, Body, HttpCode, UseBefore } from "routing-control
 import { AuthService } from "../services/auth.service";
 import { RegisterDto } from "../dto/authDtos/register";
 import { LoginDto } from "../dto/authDtos/login";
-import { RefreshToken } from "../models/entities/refresh-token.entity";
 import { RefreshTokenDto } from "../dto/authDtos/token";
 import { loginRateLimiter } from "../middleware/loginRateLimiter";
 

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { ForbiddenError } from "routing-controllers";
 import { UserRole } from "../models/entities/enums/user-role.enum";
 
 export interface AuthRequest extends Request {

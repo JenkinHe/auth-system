@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { Action, useExpressServer } from "routing-controllers";
 import { AuthRequest } from "./middleware/authRequest";
-import helmet from "helmet";
+import { ErrorHandler } from "./middleware/ErrorHandler";
 
 dotenv.config();
 
@@ -14,7 +14,8 @@ const app = express();
 
 useExpressServer(app, {
   controllers: [__dirname + "/controllers/*.ts"],
-  defaultErrorHandler: true,
+  middlewares: [ErrorHandler],
+  defaultErrorHandler: false,
   currentUserChecker: (action: Action) => {
     const req = action.request as AuthRequest;
     return req.user; // this is returned whenever you use @CurrentUser()

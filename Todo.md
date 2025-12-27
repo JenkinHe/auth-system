@@ -49,9 +49,9 @@
 - [X] Use HTTPS in production (not done for this app)
 
 ## 9. Error Handling
-- [ ] Central error handler middleware
-- [ ] Typed errors: ValidationError, AuthError, ForbiddenError
-- [ ] Standard error response format
+- [X] Central error handler middleware
+- [X] Typed errors: ValidationError, AuthError, ForbiddenError
+- [X] Standard error response format
 
 ## 10. Redis Integration
 - [ ] Cache token invalidations
@@ -63,7 +63,7 @@
 - [X] Dockerfile
 - [X] docker-compose with DB + Redis (No Redis)
 - [X] containerise the api-backend
-- [ ] Environment handling for dev/prod
+- [X] Environment handling for dev/prod
 
 ## 12. Tests
 - [ ] Unit tests for services
