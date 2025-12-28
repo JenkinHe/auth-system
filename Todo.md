@@ -53,7 +53,7 @@
 - [X] Typed errors: ValidationError, AuthError, ForbiddenError
 - [X] Standard error response format
 
-## 10. Redis Integration
+## 10. Redis Integration(hybrid db+ redis)
 - [ ] Cache token invalidations
 - [ ] Store sessions or refresh tokens
 - [ ] Use Redis expiry to auto-clean old tokens
