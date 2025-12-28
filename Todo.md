@@ -55,8 +55,8 @@
 
 ## 10. Redis Integration(hybrid db+ redis)
 - [ ] Cache token invalidations
-- [ ] Store sessions or refresh tokens
-- [ ] Use Redis expiry to auto-clean old tokens
+- [X] Store sessions or refresh tokens
+- [X] Use Redis expiry to auto-clean old tokens
 
 ## 11. Docker Setup
 - [X] docker hot-reload nodemon

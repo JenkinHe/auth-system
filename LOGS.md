@@ -16,6 +16,7 @@
  - 27/12/2025 - defining role enums, typing finesse extending classes to allow extra attached data, middleware for roles specific admin only middleware
  - 28/12/2025 - added rate limiting user specific and ip specific and added basic helmet for basic security coverage disabled for dev
  - 28/12/2025 - added custom error handler middleware with formatting and custom error classes
+ - 28/12/2025 - get docker container of redis and redis insight working, successfully store refresh token and user id key value
 
 Main Hurdles 
 - Eslint + Prettier Config

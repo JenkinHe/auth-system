@@ -9,6 +9,7 @@ import { generateAccessToken, generateRefreshToken, hashRefreshToken } from "../
 import { RefreshTokenDto } from "../dto/authDtos/token";
 import { AuthError } from "../errors/AuthError";
 import { ValidationError } from "../errors/ValidationError";
+import { RedisService } from "./redis.service";
 
 const SALT_ROUNDS = 10;
 
@@ -16,11 +17,13 @@ export class AuthService {
   private dataSource!: DataSource;
   private userRepo!: Repository<User>;
   private refreshRepo!: Repository<RefreshToken>;
+  private redisService!: RedisService;
 
   constructor() {
     this.userRepo = AppDataSource.getRepository(User);
     this.refreshRepo = AppDataSource.getRepository(RefreshToken);
     this.dataSource = AppDataSource;
+    this.redisService = new RedisService();
   }
 
   async login(dto: LoginDto) {
@@ -44,6 +47,13 @@ export class AuthService {
     });
 
     const refreshToken = generateRefreshToken();
+
+    //Todo:Make Atomic
+    this.redisService.storeRefreshToken(
+      user.id,
+      refreshToken,
+      Number(process.env.REFRESH_TOKEN_EXPIRES_DAYS)
+    );
 
     const refreshTokenEntity = this.refreshRepo.create({
       user: { id: user.id },

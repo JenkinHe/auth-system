@@ -12,6 +12,7 @@
 ## 3️⃣ Database
 - **PostgreSQL** (`pg`) – relational database
 - **TypeORM** (`typeorm`) – ORM for PostgreSQL with TypeScript support
+- **redis** - caching
 
 ## 4️⃣ Authentication & Security
 - **jsonwebtoken** (`jsonwebtoken`) + **@types/jsonwebtoken** – JWT creation & verification
